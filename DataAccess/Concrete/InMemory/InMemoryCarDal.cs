@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-
+using System.Linq.Expressions;
 
 namespace DataAccess.Concrete.InMemory
 {
@@ -18,11 +18,11 @@ namespace DataAccess.Concrete.InMemory
         {
             _cars = new List<Car>
             {
-                new Car { Id=1, BrandId=1, ColorId=1,ModelYear=2020, DailyPrice=250, Description="Sport "},
-                new Car { Id=2, BrandId=2, ColorId=1,ModelYear=2017, DailyPrice=220, Description="Sedan"},
-                new Car { Id=3, BrandId=1, ColorId=1,ModelYear=2019, DailyPrice=200, Description="Station Wagon"},
-                new Car { Id=4, BrandId=3, ColorId=1,ModelYear=2018, DailyPrice=235, Description="Hatchback"},
-                new Car { Id=5, BrandId=3, ColorId=1,ModelYear=2020, DailyPrice=290, Description="SUV"}
+                new Car { Id=1, BrandId=4, ColorId=1,ModelYear=2020, DailyPrice=250, Description="Sport "},
+                new Car { Id=2, BrandId=2, ColorId=5,ModelYear=2017, DailyPrice=220, Description="Sedan"},
+                new Car { Id=3, BrandId=1, ColorId=5,ModelYear=2019, DailyPrice=200, Description="Station Wagon"},
+                new Car { Id=4, BrandId=4, ColorId=1,ModelYear=2018, DailyPrice=235, Description="Hatchback"},
+                new Car { Id=5, BrandId=3, ColorId=4,ModelYear=2020, DailyPrice=290, Description="SUV"}
             };
         }
 
@@ -38,23 +38,24 @@ namespace DataAccess.Concrete.InMemory
             
         }
 
-        public List<Car> GetAll()
+        public Car Get(Expression<Func<Car, bool>> filter)
+        {
+            throw new NotImplementedException();
+            
+            //return _cars.Set<Car>.SingleOrDefault(filter);
+            //var carToGetById = _cars.FirstOrDefault(p => p.Id == car.Id);
+            //if (carToGetById != null
+            //{
+            //    Console.WriteLine("\t\tÜrün Kodu: " + carToGetById.Id + " " + "\t\tMarka Kodu: " + carToGetById.BrandId + " " + "\t\tRenk Kodu: " + carToGetById.ColorId + " " + "\t\tGünlük Ücret: " + carToGetById.DailyPrice + " " + "\t\tAçıklama: " + carToGetById.Description);
+
+            //}
+        }
+
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
         {
             return _cars;
         }
-
-        public void GetById(Car car)
-        {
-            //var carToGetById = _cars.First(p => p.Id == car.Id);
-            var carToGetById = _cars.FirstOrDefault(p => p.Id == car.Id);
-            if (carToGetById != null)
-            {
-                Console.WriteLine("\t\tÜrün Kodu: " + carToGetById.Id + " " + "\t\tMarka Kodu: " + carToGetById.BrandId + " " + "\t\tRenk Kodu: " + carToGetById.ColorId + " " + "\t\tGünlük Ücret: " + carToGetById.DailyPrice + " " + "\t\tAçıklama: " + carToGetById.Description);
-                
-            }
-
-
-        }
+        
 
         public void Update(Car car)
         {
@@ -67,5 +68,7 @@ namespace DataAccess.Concrete.InMemory
             carToUpdate.DailyPrice = car.DailyPrice;
             carToUpdate.Description = car.Description;
         }
+
+        
     }
 }
