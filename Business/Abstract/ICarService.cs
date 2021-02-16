@@ -1,4 +1,5 @@
-﻿using DataAccess.Abstract;
+﻿using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
@@ -9,15 +10,15 @@ namespace Business.Abstract
 {
     public interface ICarService
     {
-        List<Car> GetAll();
-        List<Car> GetDailyPrice(decimal min, decimal max);
-        List<Car> GetById(int id);
-        void AddToSystem(Car car);
-        void UpdateToSystem(Car car);
-        void DeleteToSystem(Car car);
-        List<Car> GetCarsByBrandId(int id);
-        List<Car> GetCarsByColorId(int id);
-        List<CarDetailDto> GetCarDetails();
+        IDataResult<List<Car>> GetAll();
+        IDataResult<List<Car>> GetDailyPrice(decimal min, decimal max);
+        IDataResult<Car> GetById(int id);
+        IResult AddToSystem(Car car);
+        IResult UpdateToSystem(Car car);
+        IResult DeleteToSystem(Car car);
+        IDataResult<List<Car>> GetCarsByBrandId(int id);
+        IDataResult<List<Car>> GetCarsByColorId(int id);
+        IDataResult<List<CarDetailDto>> GetCarDetails();
 
 
 

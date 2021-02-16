@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -14,40 +16,40 @@ namespace Business.Concrete
         {
             _brandDal = brandDal;
         }
-        public void AddToSystem(Brand brand)
+        public IResult AddToSystem(Brand brand)
         {
-            if (brand.BrandName.Length>2)
-            {
-                _brandDal.Add(brand);
-                Console.WriteLine("The brand was successfully added");
+            if (brand.BrandName.Length<=2)
+            {                
+                return new ErrorResult(Messages.BrandNameMinCharacter);
             }
-            else
-            {
-                Console.WriteLine("Please enter the brand name higher than 2 characters. ");
-            }
+            _brandDal.Add(brand);
+            return new SuccessResult(Messages.BrandAdded);
         }
 
-        public void DeleteToSystem(Brand brand)
+        public IResult DeleteToSystem(Brand brand)
         {
             _brandDal.Delete(brand);
+            return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public List<Brand> GetAll()
-        {
-            return _brandDal.GetAll();
+        public IDataResult<List<Brand>> GetAll()
+        {            
+            if (DateTime.Now.Hour == 23)
+            {
+                return new ErrorDataResult<List<Brand>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.BrandsListed);
         }
                 
-        public void UpdateToSystem(Brand brand)
+        public IResult UpdateToSystem(Brand brand)
         {
-            if (brand.BrandName.Length > 2)
+            if (brand.BrandName.Length <= 2)
             {
-                _brandDal.Delete(brand);
-                Console.WriteLine("The brand was successfully deleted");
+                return new ErrorResult(Messages.CarMinPrice);
+                
             }
-            else
-            {
-                Console.WriteLine("Please enter the brand name higher than 2 characters. ");
-            }
+            _brandDal.Delete(brand);
+            return new SuccessResult(Messages.BrandUpdated);
         }
     }
 }
