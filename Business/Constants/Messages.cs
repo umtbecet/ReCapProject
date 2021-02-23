@@ -35,6 +35,7 @@ namespace Business.Constants
         public static string CustomerUpdated = "Customer Updated";
         public static string CustomersListed = "Customer Listed";
         public static string ReturnedRental = "The car has been delivered.";
-
+        public static string EmailControl = "LÜtfen Geçerli Bir Email Adresi Giriniz!";
+        public static string PasswordControl = "Your password must contain at least one number, one letter and 8 characters!";
     }
 }
